@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Series Numéricas</title>
+
+
+
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* ══════════════════════════════════════
+       IMAGEN DE FONDO FIJA CON OVERLAY
+    ══════════════════════════════════════ */
+    body {
+      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+
+      /* 🖼️ Reemplaza "images/fondo.jpg" con tu imagen */
+      background-image: url('images/fondo.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+
+    /* Capa semitransparente sobre la imagen de fondo */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg,
+        rgba(232, 244, 248, 0.88) 0%,
+        rgba(240, 248, 232, 0.88) 100%);
+      z-index: 0;
+    }
+
+    /* Todo el contenido va encima del overlay */
+    .container { position: relative; z-index: 1; }
+
+    /* ── Tarjeta del formulario ── */
+    .card-form {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(100, 160, 200, 0.22);
+    }
+
+    .titulo-principal { color: #2c7aad; font-weight: 700; letter-spacing: 1px; }
+    .divisor          { border: 2px solid #a8d8ea; opacity: 1; }
+
+    .form-control {
+      border: 2px solid #a8d8ea;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      text-align: center;
+      transition: border-color 0.3s;
+      background: rgba(255,255,255,.85);
+    }
+    .form-control:focus {
+      border-color: #2c7aad;
+      box-shadow: 0 0 0 3px rgba(44,122,173,.15);
+    }
+    .label-num { color: #2c7aad; font-weight: 600; font-size: 1.05rem; }
+
+    /* ── Botones ── */
+    .btn-fibo   { background-color: #a8d8ea; color: #1a5276; border: none; }
+    .btn-par    { background-color: #a9dfbf; color: #1e5631; border: none; }
+    .btn-mult   { background-color: #f9e79f; color: #7d6608; border: none; }
+    .btn-div    { background-color: #f5cba7; color: #784212; border: none; }
+    .btn-serie1 { background-color: #d2b4de; color: #4a235a; border: none; }
+    .btn-serie2 { background-color: #aed6f1; color: #1a5276; border: none; }
+
+    .btn-serie {
+      border-radius: 10px;
+      font-weight: 600;
+      padding: 10px 18px;
+      font-size: 0.92rem;
+      transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .btn-serie:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.13);
+      filter: brightness(0.93);
+    }
+    .icono-serie { font-size: 1.3rem; margin-bottom: 4px; display: block; }
+
+    /* ══════════════════════════════════════
+       SECCIÓN DE VIDEO
+    ══════════════════════════════════════ */
+    .video-section {
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(6px);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(100,160,200,.18);
+      padding: 24px;
+    }
+    .video-section h5 {
+      color: #2c7aad;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .video-section p {
+      color: #5d6d7e;
+      font-size: .9rem;
+      margin-bottom: 0;
+    }
+
+    .video-wrapper {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(44,122,173,.2);
+      background: #000;
+    }
+    .video-wrapper video {
+      width: 100%;
+      display: block;
+      border-radius: 14px;
+    }
+
+    /* Badge "VIDEO" sobre el video */
+    .video-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(44,122,173,.85);
+      color: #fff;
+      font-size: .75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: .5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container py-5">
+
+    <!-- ── TÍTULO ── -->
+    <h1 class="text-center titulo-principal mb-2">📊 Series Numéricas</h1>
+    <p class="text-center text-muted mb-1">Envío de datos a través del método GET</p>
+    <hr class="divisor w-75 mx-auto mb-4">
+
+    <div class="row g-4 justify-content-center align-items-start">
+
+      <!-- ── COLUMNA IZQUIERDA: VIDEO ── -->
+      <div class="col-md-5 col-lg-4">
+        <div class="video-section h-100">
+          <h5>🎬 ¿Qué son las Series?</h5>
+          <div class="video-wrapper mb-3">
+            <!--
+              🎥 Reemplaza "videos/video.mp4" con la ruta de tu video.
+              También puedes usar poster="images/miniatura.jpg"
+              para mostrar una imagen antes de reproducir.
+            -->
+            <video
+              controls
+              poster="imgLabo1/circulo.png"
+              preload="metadata"
+            >
+              <source src="videosLabo1/esferas.mp4" type="video/mp4">
+              Tu navegador no soporta el elemento video.
+            </video>
+            <span class="video-badge">▶ VIDEO</span>
+          </div>
+          <p>
+            Una serie numérica es una sucesión de números que siguen
+            un patrón o regla matemática. Selecciona un tipo de serie
+            e ingresa un número para explorar sus resultados.
+          </p>
+        </div>
+      </div>
+
+      <!-- ── COLUMNA DERECHA: FORMULARIO ── -->
+      <div class="col-md-7 col-lg-5">
+        <div class="card card-form p-4">
+
+          <form id="datos" action="serie.php" method="GET">
+
+            <div class="mb-4 text-center">
+              <label for="num1" class="form-label label-num">
+                🔢 Ingrese un número
+              </label>
+              <input
+                type="number"
+                id="num1"
+                name="num1"
+                class="form-control mx-auto"
+                style="max-width: 180px;"
+                placeholder="Ej: 10"
+                min="1"
+                required
+              >
+            </div>
+
+            <p class="text-center text-muted mb-3" style="font-size:.9rem;">
+              Seleccione el tipo de serie:
+            </p>
+
+            <div class="row g-3 justify-content-center">
+
+              <div class="col-6">
+                <button type="submit" name="fibo" value="1"
+                  class="btn btn-serie btn-fibo w-100">
+                  <span class="icono-serie">🌀</span>Fibonacci
+                </button>
+              </div>
+
+              <div class="col-6">
+                <button type="submit" name="par" value="1"
+                  class="btn btn-serie btn-par w-100">
+                  <span class="icono-serie">2️⃣</span>Números Pares
+                </button>
+              </div>
+
+              <div class="col-6">
+                <button type="submit" name="mult" value="1"
+                  class="btn btn-serie btn-mult w-100">
+                  <span class="icono-serie">✖️</span>Multiplicación
+                </button>
+              </div>
+
+              <div class="col-6">
+                <button type="submit" name="div" value="1"
+                  class="btn btn-serie btn-div w-100">
+                  <span class="icono-serie">➗</span>División
+                </button>
+              </div>
+
+              <div class="col-12">
+                <button type="submit" name="serie1" value="1"
+                  class="btn btn-serie btn-serie1 w-100">
+                  <span class="icono-serie">🔁</span>
+                  Serie 1 — (1,2,3,3,2,1,1,2,3,3…)
+                </button>
+              </div>
+
+              <div class="col-12">
+                <button type="submit" name="serie2" value="1"
+                  class="btn btn-serie btn-serie2 w-100">
+                  <span class="icono-serie">📐</span>
+                  Serie 2 — (0,1,1,2,1,3,2,4,3,5…)
+                </button>
+              </div>
+
+            </div>
+          </form>
+
+        </div><!-- /card -->
+      </div>
+
+    </div><!-- /row -->
+  </div><!-- /container -->
+
+  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
